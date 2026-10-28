@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}All Parcels | ParcelTrack{% endblock %}
+{% block content %}
+<section class="page-heading"><p class="eyebrow">DATABASE RECORDS</p><h1>All parcels</h1><p>View, update, or delete records stored in the SQLite database.</p></section>
+<section class="panel">
+{% if parcels %}
+<div class="table-wrap"><table>
+<thead><tr><th>Tracking ID</th><th>Sender</th><th>Receiver</th><th>Destination</th><th>Status</th><th>Actions</th></tr></thead>
+<tbody>{% for p in parcels %}
+<tr><td><b>{{ p.tracking_id }}</b></td><td>{{ p.sender_name }}</td><td>{{ p.receiver_name }}</td><td>{{ p.destination }}</td><td><span class="status">{{ p.status }}</span></td>
+<td class="actions-cell"><a href="{{ url_for('track_parcel', tracking_id=p.tracking_id) }}">Track</a><a href="{{ url_for('update_status', parcel_id=p.id) }}">Update</a>
+<form method="POST" action="{{ url_for('delete_parcel', parcel_id=p.id) }}" onsubmit="return confirm('Delete this parcel record?');"><button class="text-button danger" type="submit">Delete</button></form></td></tr>
+{% endfor %}</tbody></table></div>
+{% else %}<p class="empty">No records found. <a href="{{ url_for('add_parcel') }}">Add a parcel</a>.</p>{% endif %}
+</section>
+{% endblock %}

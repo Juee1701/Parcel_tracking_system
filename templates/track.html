@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Track Parcel | ParcelTrack{% endblock %}
+{% block content %}
+<section class="page-heading"><p class="eyebrow">LIVE LOOKUP · LOCAL DEMO DATA</p><h1>Track your parcel</h1><p>Enter the tracking ID provided when the parcel was added.</p></section>
+<form class="panel search-form" method="POST">
+    <label for="tracking_id">Tracking ID</label>
+    <div class="search-row"><input id="tracking_id" name="tracking_id" value="{{ tracking_id }}" placeholder="Example: PKG-A1B2C3D4" required><button class="button">Search</button></div>
+</form>
+{% if parcel %}
+<section class="panel result-panel">
+    <div class="panel-heading"><div><p class="eyebrow">TRACKING NUMBER</p><h2>{{ parcel.tracking_id }}</h2></div><span class="status large">{{ parcel.status }}</span></div>
+    <div class="detail-grid">
+        <div><span>Sender</span><strong>{{ parcel.sender_name }}</strong></div>
+        <div><span>Receiver</span><strong>{{ parcel.receiver_name }}</strong></div>
+        <div><span>Destination</span><strong>{{ parcel.destination }}</strong></div>
+        <div><span>Date created</span><strong>{{ parcel.created_at }}</strong></div>
+        <div class="full"><span>Description</span><strong>{{ parcel.description or 'Not provided' }}</strong></div>
+    </div>
+    <div class="progress">
+      {% for s in ["Booked", "In Transit", "Out for Delivery", "Delivered"] %}
+      <div class="step {% if ["Booked", "In Transit", "Out for Delivery", "Delivered"].index(s) <= ["Booked", "In Transit", "Out for Delivery", "Delivered"].index(parcel.status) %}done{% endif %}">
+        <i></i><span>{{ s }}</span>
+      </div>
+      {% endfor %}
+    </div>
+</section>
+{% elif searched %}
+<section class="panel empty"><h2>No parcel found</h2><p>Check the tracking ID and try again.</p></section>
+{% endif %}
+{% endblock %}

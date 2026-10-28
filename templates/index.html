@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Home | ParcelTrack{% endblock %}
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="eyebrow">SIMPLE · RELIABLE · TRACKABLE</p>
+        <h1>Every parcel, <span>one place.</span></h1>
+        <p>Register parcels, track delivery progress, and manage records through a database-connected website.</p>
+        <div class="actions">
+            <a class="button" href="{{ url_for('add_parcel') }}">＋ Add a parcel</a>
+            <a class="button secondary" href="{{ url_for('track_parcel') }}">Track a parcel</a>
+        </div>
+    </div>
+    <div class="package-art">📦</div>
+</section>
+<section class="stats">
+    <div class="stat"><span>Total parcels</span><strong>{{ total }}</strong></div>
+    <div class="stat"><span>In progress</span><strong>{{ in_transit }}</strong></div>
+    <div class="stat"><span>Delivered</span><strong>{{ delivered }}</strong></div>
+</section>
+<section class="panel">
+    <div class="panel-heading"><h2>Recently added parcels</h2><a href="{{ url_for('all_parcels') }}">View all →</a></div>
+    {% if recent %}
+    <div class="table-wrap"><table>
+        <thead><tr><th>Tracking ID</th><th>Receiver</th><th>Destination</th><th>Status</th><th></th></tr></thead>
+        <tbody>{% for p in recent %}
+        <tr><td><b>{{ p.tracking_id }}</b></td><td>{{ p.receiver_name }}</td><td>{{ p.destination }}</td>
+        <td><span class="status">{{ p.status }}</span></td><td><a href="{{ url_for('track_parcel', tracking_id=p.tracking_id) }}">Details</a></td></tr>
+        {% endfor %}</tbody>
+    </table></div>
+    {% else %}<p class="empty">No parcels yet. Add your first parcel to get started.</p>{% endif %}
+</section>
+{% endblock %}

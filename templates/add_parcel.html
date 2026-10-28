@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Add Parcel | ParcelTrack{% endblock %}
+{% block content %}
+<section class="page-heading"><p class="eyebrow">PARCEL MANAGEMENT</p><h1>Add a new parcel</h1><p>Enter the details below. A tracking ID will be generated automatically.</p></section>
+<form class="panel form-panel" method="POST">
+    <div class="form-grid">
+        <label>Sender name *<input name="sender_name" required maxlength="100" placeholder="Enter sender name"></label>
+        <label>Receiver name *<input name="receiver_name" required maxlength="100" placeholder="Enter receiver name"></label>
+        <label class="full">Destination *<input name="destination" required maxlength="200" placeholder="City or delivery address"></label>
+        <label class="full">Parcel description<textarea name="description" rows="3" maxlength="500" placeholder="Books, documents, clothes, etc."></textarea></label>
+    </div>
+    <button class="button" type="submit">Save parcel</button>
+</form>
+{% endblock %}

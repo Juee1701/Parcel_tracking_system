@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Update Status | ParcelTrack{% endblock %}
+{% block content %}
+<section class="page-heading"><p class="eyebrow">PARCEL MANAGEMENT</p><h1>Update parcel status</h1><p>Tracking ID: <b>{{ parcel.tracking_id }}</b></p></section>
+<form class="panel form-panel" method="POST">
+    <label>Current status<select name="status" required>
+        {% for s in statuses %}<option value="{{ s }}" {% if s == parcel.status %}selected{% endif %}>{{ s }}</option>{% endfor %}
+    </select></label>
+    <div class="actions"><button class="button" type="submit">Save status</button><a class="button secondary" href="{{ url_for('all_parcels') }}">Cancel</a></div>
+</form>
+{% endblock %}
